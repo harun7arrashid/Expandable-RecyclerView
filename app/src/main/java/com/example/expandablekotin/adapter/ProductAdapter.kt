@@ -16,6 +16,9 @@ import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder
 class ProductAdapter(groups: List<ExpandableGroup<*>>?)
     : ExpandableRecyclerViewAdapter<ProductAdapter.CompanyViewHolder, ProductAdapter.ProductViewHolder>(groups) {
 
+    var onItemClickCompany: ((Company) -> Unit)? = null
+    var onItemClickProduct: ((Product) -> Unit)? = null
+
     override fun onCreateGroupViewHolder(parent: ViewGroup?, viewType: Int): CompanyViewHolder {
         val view = ListItemCompanyBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
         return CompanyViewHolder(view)
@@ -26,14 +29,22 @@ class ProductAdapter(groups: List<ExpandableGroup<*>>?)
         return ProductViewHolder(view)
     }
 
-    override fun onBindChildViewHolder(holder: ProductViewHolder?, flatPosition: Int, group: ExpandableGroup<*>?, childIndex: Int) {
-        val product: Product = group?.items?.get(childIndex) as Product
-        holder?.bind(product)
-    }
-
     override fun onBindGroupViewHolder(holder: CompanyViewHolder?, flatPosition: Int, group: ExpandableGroup<*>?) {
         val company: Company = group as Company
+        //val position: Company = group?.items?.get(flatPosition) as Company
         holder?.bind(company)
+        onItemClickCompany?.invoke(company)
+//        holder?.itemView?.setOnClickListener {
+//            onItemClickCompany?.invoke(company)
+//        }
+    }
+
+    override fun onBindChildViewHolder(holder: ProductViewHolder?, flatPosition: Int, group: ExpandableGroup<*>?, childIndex: Int) {
+        val product: Product = group?.items?.get(childIndex) as Product // anggap aja [position]
+        holder?.bind(product)
+        holder?.itemView?.setOnClickListener {
+            onItemClickProduct?.invoke(product)
+        }
     }
 
     inner class ProductViewHolder(private val binding: ListItemProductBinding): ChildViewHolder(binding.root) {
@@ -69,5 +80,11 @@ class ProductAdapter(groups: List<ExpandableGroup<*>>?)
             rotate.fillAfter = true
             binding.imgArrow.animation = rotate
         }
+
+//        init {
+//            binding.root.setOnClickListener {
+//                onItemClickCompany?.invoke()
+//            }
+//        }
     }
 }

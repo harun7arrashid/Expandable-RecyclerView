@@ -2,6 +2,7 @@ package com.example.expandablekotin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.expandablekotin.adapter.ProductAdapter
 import com.example.expandablekotin.databinding.ActivityMainBinding
@@ -44,6 +45,14 @@ class MainActivity : AppCompatActivity() {
         companies.add(microsoft)
 
         val mAdapter = ProductAdapter(companies)
+        mAdapter.onItemClickCompany = {
+            Toast.makeText(this, it.title, Toast.LENGTH_SHORT).show()
+        }
+
+        mAdapter.onItemClickProduct = {
+            Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
+        }
+
         with(binding.rvMain) {
             layoutManager = LinearLayoutManager(this@MainActivity)
             setHasFixedSize(true)

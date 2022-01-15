@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.16458333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1484375" />
         <entry key="app/src/main/res/layout/list_item_company.xml" value="0.1484375" />
+        <entry key="app/src/main/res/layout/list_item_product.xml" value="0.1796875" />
       </map>
     </option>
   </component>
